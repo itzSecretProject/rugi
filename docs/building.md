@@ -11,9 +11,19 @@
 |---|---|---|---|
 | `cargo run` (dev) | 1–3 s | 93 s | Debug engine, optimized dependencies |
 | `--release` | < 1 s | 56 s | Day-to-day work; about 8% slower than `dist` |
-| `--profile dist` | ~55 s | – | Shipping and benchmarks: fat LTO, one codegen unit |
+| `--profile dist` | ~55 s | – | Benchmarks: fat LTO, one codegen unit, debug info kept |
+| `--profile shipping` | ~3 min | – | What you give to users: `dist` with symbols and debug info stripped |
 
-Times are from an Apple M1. Per-crate rebuild times and the reasoning behind
+Times are from an Apple M1.
+
+The shipping build keeps panics unwinding, because the C ABI turns them into
+error codes (`catch_unwind`); it does not use `panic = "abort"`. Stripping
+removes function names and debug info, which makes the binary harder to read
+(on macOS, 25,669 symbols become 329, and the release library goes from
+14.7 MB to 9.3 MB). It does not stop someone who has the binary from reading
+its code, so keep logic that must stay private on a server. The exported C
+functions are unchanged; the C and C++ tests pass against this build
+(`cmake -DRUGI_CARGO_PROFILE=shipping`). Per-crate rebuild times and the reasoning behind
 each profile are in [benchmarks.md](benchmarks.md#build-times-apple-m1-8-cores).
 
 ## Examples

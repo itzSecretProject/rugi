@@ -6,6 +6,12 @@ versioned separately through `RUGI_ABI_VERSION`.
 
 ## [Unreleased]
 
+### Added
+
+- `shipping` build profile: the `dist` profile with symbols and debug info
+  stripped, for distributing applications. Select it from CMake with
+  `-DRUGI_CARGO_PROFILE=shipping`.
+
 ## [0.1.0]
 
 Initial release.

@@ -70,6 +70,14 @@ codegen-units = 1
 [profile.release.package.rugi-ui]
 codegen-units = 1
 
+# `--profile shipping`: what you give to users. The dist build with the
+# symbol table and debug info removed. Panics still unwind (the C ABI relies
+# on catch_unwind), so this is not `panic = "abort"`.
+[profile.shipping]
+inherits = "dist"
+debug = false
+strip = "symbols"
+
 # `--profile dist`: shipping builds and benchmarks. Whole-program (fat) LTO
 # across the engine and its dependencies: the fastest binaries, ~1 minute
 # per rebuild.
