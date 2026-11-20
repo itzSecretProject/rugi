@@ -531,11 +531,13 @@ fn hostile_widgets(rng: &mut Rng, ui: &mut Ui, st: &mut ApiState, log: &RefCell<
                 ui.progress_bar(hostile(rng));
             }
             6 => {
-                let r = Some((hostile(rng), hostile(rng))).filter(|_| rng.chance(0.5));
+                let pair = (hostile(rng), hostile(rng));
+                let r = rng.chance(0.5).then_some(pair);
                 ui.plot_lines("pl", &vals, r, hostile(rng));
             }
             7 => {
-                let r = Some((hostile(rng), hostile(rng))).filter(|_| rng.chance(0.5));
+                let pair = (hostile(rng), hostile(rng));
+                let r = rng.chance(0.5).then_some(pair);
                 ui.plot_histogram("ph", &vals, r, hostile(rng));
             }
             8 => ui.columns(rng.below(4) as u32, |ui| {
