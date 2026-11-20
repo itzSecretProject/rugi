@@ -5,6 +5,7 @@
 //! symbolic links are not followed, and the walk stays on the file system of
 //! the folder it starts in.
 
+#[cfg(unix)]
 use std::collections::HashSet;
 use std::fs::{self, Metadata};
 use std::io;
@@ -104,13 +105,19 @@ struct Walk<'a> {
     progress: &'a Progress,
     device: Option<u64>,
     /// (device, inode) of hard-linked files already counted.
+    #[cfg(unix)]
     seen: HashSet<(u64, u64)>,
 }
 
 fn scan_root(root: &Path, progress: &Progress) -> io::Result<Node> {
     let meta = fs::symlink_metadata(root)?;
     let name = root.display().to_string();
-    let mut walk = Walk { progress, device: device(&meta), seen: HashSet::new() };
+    let mut walk = Walk {
+        progress,
+        device: device(&meta),
+        #[cfg(unix)]
+        seen: HashSet::new(),
+    };
     Ok(if meta.is_dir() { walk.folder(root, name) } else { walk.leaf(name, &meta) })
 }
 

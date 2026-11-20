@@ -1218,8 +1218,13 @@ static void test_threads(void) {
     pthread_create(&t, NULL, app_run_thread, NULL);
     pthread_join(t, &rc);
     ++checks;
-    if ((intptr_t)rc != RUGI_ERROR_WRONG_THREAD && (intptr_t)rc != RUGI_ERROR_WINDOW)
-        FAIL("rugi_app_run off the main thread -> %d", (int)(intptr_t)rc);
+    /* macOS checks the thread; elsewhere the windowing library refuses and the
+       panic is caught (RUGI_ERROR_PANIC). Either way no window opens. */
+    int ok = (intptr_t)rc == RUGI_ERROR_WRONG_THREAD || (intptr_t)rc == RUGI_ERROR_WINDOW;
+#ifndef __APPLE__
+    ok = ok || (intptr_t)rc == RUGI_ERROR_PANIC;
+#endif
+    if (!ok) FAIL("rugi_app_run off the main thread -> %d", (int)(intptr_t)rc);
 }
 
 int main(void) {

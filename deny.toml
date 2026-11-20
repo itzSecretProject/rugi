@@ -17,7 +17,9 @@ targets = [
   { triple = "x86_64-unknown-linux-gnu" },
   { triple = "aarch64-unknown-linux-gnu" },
 ]
-all-features = true
+# Benchmarks use egui as a reference, and it is optional; only the
+# default feature set of the published crates is checked.
+all-features = false
 
 [advisories]
 version = 2
@@ -48,6 +50,8 @@ ignore = true
 [bans]
 multiple-versions = "warn"
 wildcards = "deny"
+# Workspace path dependencies carry no version of their own.
+allow-wildcard-paths = true
 
 [sources]
 unknown-registry = "deny"

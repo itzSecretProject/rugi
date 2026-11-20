@@ -30,13 +30,11 @@ fn fmix64(mut h: u64) -> u64 {
 /// build; not a stable on-disk format.
 #[inline]
 pub fn hash_bytes(mut h: u64, bytes: &[u8]) -> u64 {
-    let mut chunks = bytes.chunks_exact(8);
-    for c in &mut chunks {
-        let w = u64::from_le_bytes([c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7]]);
-        h = (h ^ w).wrapping_mul(K);
+    let (chunks, rest) = bytes.as_chunks::<8>();
+    for c in chunks {
+        h = (h ^ u64::from_le_bytes(*c)).wrapping_mul(K);
         h ^= h >> 29;
     }
-    let rest = chunks.remainder();
     if !rest.is_empty() {
         let mut buf = [0u8; 8];
         buf[..rest.len()].copy_from_slice(rest);
