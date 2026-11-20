@@ -17,7 +17,19 @@ fn header_is_up_to_date() {
     }
     let current = std::fs::read(&header).unwrap_or_default();
     assert!(
-        current == generated,
+        line_endings_lf(&current) == line_endings_lf(&generated),
         "include/rugi/rugi.h is stale. Regenerate with: RUGI_BLESS_HEADER=1 cargo test -p rugi-ffi header"
     );
+}
+
+/// Git on Windows may check the header out with CRLF line endings.
+fn line_endings_lf(bytes: &[u8]) -> Vec<u8> {
+    let mut out = Vec::with_capacity(bytes.len());
+    for (i, &b) in bytes.iter().enumerate() {
+        if b == b'\r' && bytes.get(i + 1) == Some(&b'\n') {
+            continue;
+        }
+        out.push(b);
+    }
+    out
 }

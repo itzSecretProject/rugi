@@ -354,8 +354,8 @@ impl Ui {
         }
         if resp.focused {
             let step = T::slider_step(lo, hi, self.input.modifiers.shift);
-            for i in 0..self.input.keys.len() {
-                match self.input.keys[i].0 {
+            for &(key, _) in &self.input.keys {
+                match key {
                     Key::ArrowLeft | Key::ArrowDown => *value = value.add_steps(step, -1),
                     Key::ArrowRight | Key::ArrowUp => *value = value.add_steps(step, 1),
                     Key::Home => *value = lo,

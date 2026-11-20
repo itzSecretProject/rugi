@@ -41,6 +41,10 @@ allow = [
   "0BSD",
   "Unicode-3.0",
   "Unicode-DFS-2016",
+  # Only egui's bundled default fonts, which the benchmarks crate (not
+  # distributed) pulls in as an optional reference.
+  "OFL-1.1",
+  "Ubuntu-font-1.0",
 ]
 
 [licenses.private]

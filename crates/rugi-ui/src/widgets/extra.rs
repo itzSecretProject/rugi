@@ -506,8 +506,8 @@ impl Ui {
             }
             if sq_resp.focused {
                 let step = self.color_key_step();
-                for i in 0..self.input.keys.len() {
-                    match self.input.keys[i].0 {
+                for &(key, _) in &self.input.keys {
+                    match key {
                         Key::ArrowLeft => ss -= step,
                         Key::ArrowRight => ss += step,
                         Key::ArrowDown => vv -= step,
@@ -540,8 +540,8 @@ impl Ui {
             }
             if hb_resp.focused {
                 let step = self.color_key_step() * 360.0;
-                for i in 0..self.input.keys.len() {
-                    match self.input.keys[i].0 {
+                for &(key, _) in &self.input.keys {
+                    match key {
                         Key::ArrowLeft | Key::ArrowDown => hh -= step,
                         Key::ArrowRight | Key::ArrowUp => hh += step,
                         Key::Home => hh = 0.0,

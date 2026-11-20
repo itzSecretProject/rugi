@@ -55,8 +55,8 @@ impl Ui {
             }
         }
         if resp.focused && !open && !items.is_empty() {
-            for i in 0..self.input.keys.len() {
-                match self.input.keys[i].0 {
+            for &(key, _) in &self.input.keys {
+                match key {
                     Key::ArrowDown if *selected + 1 < items.len() => {
                         *selected += 1;
                         resp.changed = true;
@@ -145,8 +145,8 @@ impl Ui {
             }
             if resp.focused {
                 out.focused = true;
-                for k in 0..self.input.keys.len() {
-                    match self.input.keys[k].0 {
+                for &(key, _) in &self.input.keys {
+                    match key {
                         Key::ArrowRight if *selected + 1 < labels.len() => {
                             *selected += 1;
                             out.changed = true;
@@ -373,8 +373,8 @@ impl Ui {
             }
         }
         if resp.focused {
-            for i in 0..self.input.keys.len() {
-                match self.input.keys[i].0 {
+            for &(key, _) in &self.input.keys {
+                match key {
                     Key::ArrowUp | Key::ArrowRight => *value = value.add_steps(step, 1),
                     Key::ArrowDown | Key::ArrowLeft => *value = value.add_steps(step, -1),
                     Key::Home => *value = lo,
@@ -476,8 +476,8 @@ impl Ui {
         if focus.focused && rows > 0 {
             let (last, page) = (rows - 1, ((height / row_h) as usize).max(1));
             let mut sel = *selected;
-            for i in 0..self.input.keys.len() {
-                sel = Some(match (self.input.keys[i].0, sel) {
+            for &(key, _) in &self.input.keys {
+                sel = Some(match (key, sel) {
                     (Key::ArrowDown, Some(s)) => s.saturating_add(1).min(last),
                     (Key::ArrowUp, Some(s)) => s.min(last).saturating_sub(1),
                     (Key::PageDown, Some(s)) => s.saturating_add(page).min(last),

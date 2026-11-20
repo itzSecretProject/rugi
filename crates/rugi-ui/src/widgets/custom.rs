@@ -471,8 +471,8 @@ impl Ui {
             group.hovered |= resp.hovered;
             group.focused |= resp.focused;
             if resp.focused {
-                for k in 0..self.input.keys.len() {
-                    match self.input.keys[k].0 {
+                for &(key, _) in &self.input.keys {
+                    match key {
                         Key::ArrowLeft if *selected > 0 => {
                             *selected -= 1;
                             group.changed = true;
@@ -618,8 +618,8 @@ impl Ui {
             }
         }
         if resp.focused {
-            for k in 0..self.input.keys.len() {
-                match self.input.keys[k].0 {
+            for &(key, _) in &self.input.keys {
+                match key {
                     Key::ArrowLeft if *index > 0 => *index -= 1,
                     Key::ArrowRight if *index + 1 < count => *index += 1,
                     Key::Enter | Key::Space => resp.clicked = true,
