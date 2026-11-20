@@ -1,0 +1,12 @@
+[package]
+name = "disk-usage"
+description = "Rugi example: a disk usage explorer that scans a folder and lists what takes the space."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+rugi-example-shot.workspace = true
+rugi.workspace = true

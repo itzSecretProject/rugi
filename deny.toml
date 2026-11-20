@@ -1,0 +1,54 @@
+# cargo-deny configuration: https://github.com/EmbarkStudios/cargo-deny
+#
+#   cargo install cargo-deny --locked
+#   cargo deny check
+#
+# Rugi is MIT OR Apache-2.0 and must stay usable in closed-source
+# applications, so every dependency must be under a permissive license.
+# Copyleft licenses (GPL, LGPL, AGPL, MPL-2.0 file-level copyleft included)
+# are rejected unless explicitly reviewed here.
+
+[graph]
+targets = [
+  { triple = "aarch64-apple-darwin" },
+  { triple = "x86_64-apple-darwin" },
+  { triple = "x86_64-pc-windows-msvc" },
+  { triple = "aarch64-pc-windows-msvc" },
+  { triple = "x86_64-unknown-linux-gnu" },
+  { triple = "aarch64-unknown-linux-gnu" },
+]
+all-features = true
+
+[advisories]
+version = 2
+
+[licenses]
+version = 2
+confidence-threshold = 0.93
+allow = [
+  "Apache-2.0",
+  "Apache-2.0 WITH LLVM-exception",
+  "MIT",
+  "MIT-0",
+  "BSD-2-Clause",
+  "BSD-3-Clause",
+  "ISC",
+  "Zlib",
+  "BSL-1.0",
+  "CC0-1.0",
+  "0BSD",
+  "Unicode-3.0",
+  "Unicode-DFS-2016",
+]
+
+[licenses.private]
+# Examples and benchmarks are `publish = false`.
+ignore = true
+
+[bans]
+multiple-versions = "warn"
+wildcards = "deny"
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"

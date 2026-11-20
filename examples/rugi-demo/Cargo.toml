@@ -1,0 +1,12 @@
+[package]
+name = "rugi-demo"
+description = "The Rugi demo: every widget and feature, like Dear ImGui's demo window."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+rugi-example-shot.workspace = true
+rugi.workspace = true

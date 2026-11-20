@@ -1,0 +1,12 @@
+[package]
+name = "effects"
+description = "Rugi example: a glass panel over an animated backdrop, with controls for both."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+rugi-example-shot.workspace = true
+rugi.workspace = true

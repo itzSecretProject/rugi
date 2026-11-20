@@ -1,0 +1,31 @@
+name: Bug report
+description: Something does not work as documented.
+labels: [bug]
+body:
+  - type: textarea
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Minimal reproduction
+      description: The smallest Rust, C or C++ program that shows the problem.
+      render: rust
+  - type: input
+    attributes:
+      label: Rugi version
+      placeholder: 0.1.0, or a commit hash
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Platform
+      placeholder: macOS 15 (M1), Windows 11 (RTX 3060), Ubuntu 24.04 (Wayland)
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: API
+      options: [Rust, C, C++]

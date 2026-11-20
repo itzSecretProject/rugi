@@ -1,0 +1,21 @@
+[package]
+name = "rugi-text"
+description = "Text shaping, layout cache and glyph atlas for the Rugi GUI framework."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+rugi-core.workspace = true
+cosmic-text.workspace = true
+rugi-icons = { workspace = true, optional = true }
+
+[features]
+default = ["lucide"]
+# Bundles the Lucide icon font (ISC) and registers it at start-up.
+lucide = ["dep:rugi-icons"]

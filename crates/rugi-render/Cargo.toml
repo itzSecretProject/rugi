@@ -1,0 +1,16 @@
+[package]
+name = "rugi-render"
+description = "wgpu renderer for the Rugi GUI framework (instanced SDF primitives)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+rugi-core.workspace = true
+bytemuck.workspace = true
+wgpu.workspace = true

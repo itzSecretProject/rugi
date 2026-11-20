@@ -1,0 +1,18 @@
+[package]
+name = "rugi-benchmarks"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[features]
+default = []
+# Adds the egui comparison (pulls egui into this benchmark crate only).
+egui = ["dep:egui"]
+
+[dependencies]
+rugi-core.workspace = true
+rugi-ui.workspace = true
+rugi-winit.workspace = true
+egui = { version = "0.37", optional = true, default-features = false, features = ["default_fonts"] }

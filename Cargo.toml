@@ -1,0 +1,81 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/rugi-core",
+    "crates/rugi-icons",
+    "crates/rugi-text",
+    "crates/rugi-theme",
+    "crates/rugi-render",
+    "crates/rugi-ui",
+    "crates/rugi-winit",
+    "crates/rugi-ffi",
+    "crates/rugi",
+    "examples/common",
+    "examples/disk-usage",
+    "examples/rugi-demo",
+    "examples/effects",
+    "benchmarks",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.90"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/itzSecretProject/rugi"
+homepage = "https://github.com/itzSecretProject/rugi"
+keywords = ["gui", "ui", "immediate-mode", "wgpu", "widgets"]
+categories = ["gui", "graphics", "rendering"]
+
+[workspace.dependencies]
+rugi-core = { path = "crates/rugi-core", version = "0.1.0" }
+rugi-icons = { path = "crates/rugi-icons", version = "0.1.0" }
+rugi-text = { path = "crates/rugi-text", version = "0.1.0" }
+rugi-theme = { path = "crates/rugi-theme", version = "0.1.0" }
+rugi-render = { path = "crates/rugi-render", version = "0.1.0" }
+rugi-ui = { path = "crates/rugi-ui", version = "0.1.0" }
+rugi-winit = { path = "crates/rugi-winit", version = "0.1.0" }
+rugi = { path = "crates/rugi", version = "0.1.0" }
+rugi-example-shot = { path = "examples/common" }
+bytemuck = { version = "1.25", features = ["derive"] }
+cosmic-text = { version = "0.19", default-features = false, features = ["std", "swash", "fontconfig"] }
+wgpu = "30"
+winit = "0.30"
+pollster = "1"
+png = "0.18"
+
+# Development: your crates compile unoptimized (incremental, ~2 s rebuilds),
+# but dependencies (wgpu, text shaping, rasterization) are optimized once, so
+# debug builds still run smoothly.
+[profile.dev.package."*"]
+opt-level = 3
+# Full debug info for optimized dependencies made clean dev builds ~6x slower
+# (wgpu); line tables keep backtraces useful.
+debug = "line-tables-only"
+
+# `--release`: full optimization per crate with fast incremental rebuilds
+# (seconds). Measured ≈ 8% slower than `dist` on the CPU frame build.
+[profile.release]
+debug = 1
+lto = "off"
+codegen-units = 16
+incremental = true
+
+# The engine's hot crates as one codegen unit each, so their inner loops
+# inline fully; dependencies stay split so rebuilds stay fast.
+[profile.release.package.rugi-core]
+codegen-units = 1
+[profile.release.package.rugi-text]
+codegen-units = 1
+[profile.release.package.rugi-ui]
+codegen-units = 1
+
+# `--profile dist`: shipping builds and benchmarks. Whole-program (fat) LTO
+# across the engine and its dependencies: the fastest binaries, ~1 minute
+# per rebuild.
+[profile.dist]
+inherits = "release"
+debug = 1
+lto = "fat"
+codegen-units = 1
+incremental = false

@@ -1,0 +1,12 @@
+[package]
+name = "rugi-example-shot"
+description = "Headless screenshot mode shared by the Rugi example apps."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+rugi.workspace = true
+png.workspace = true

@@ -1,0 +1,15 @@
+name: Feature request
+description: A widget, option or API that Rugi does not have yet.
+labels: [enhancement]
+body:
+  - type: textarea
+    attributes:
+      label: What you want to build
+      description: The application or screen this is for, and what is missing.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Proposed API
+      description: How you would like to call it, if you have an idea.
+      render: rust
