@@ -222,6 +222,18 @@ Known limitations and planned work:
 8. 120/144 Hz displays: the pacing code follows the monitor, but only a 60 Hz
    panel was available for testing.
 
+## How it was made
+
+Rugi was written in November 2026 with AI assistance (Claude, through Claude
+Code). The author chose the design, directed the work and reviewed the
+changes, and the project was checked with the tools it ships: the test suite,
+the fuzzer, the sanitizer runs against the C ABI, the contrast and keyboard
+tests, and the benchmarks in [docs/benchmarks.md](docs/benchmarks.md).
+
+The first public release is a single commit. Later changes are recorded commit
+by commit. [Platform support](#platform-support) says what has and has not
+been run on real hardware.
+
 ## Contributing
 
 Bug reports and pull requests are welcome; see
